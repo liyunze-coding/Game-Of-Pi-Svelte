@@ -15,6 +15,7 @@
     const sequence = PI.split('');
     let startGameOverlay: HTMLDivElement;
     let restartOverlay: HTMLDivElement;
+    let showStartGameOverlay = true;
     let showSequence = false;
     let gameOverState = false;
     let showStart = true;
@@ -42,6 +43,11 @@
 
     let userSequence = ''; // The sequence of numbers the user has entered
     let n = 0; // The number of digits to show
+
+    function startModalClick() {
+        startGameOverlay.style.visibility = 'hidden';
+        showStartGameOverlay = false;
+    }
 
     async function handleKeyClick(key: string) {
         if (showSequence || gameOverState) return;
@@ -215,6 +221,9 @@
 
             <button on:click={resetGameStats}>Restart</button>
         </div>
+        <div class="row-3">
+            {#if showStart && !gameOverState && !showStartGameOverlay}<button on:click={finishSequence}>That's all I remember for now</button>{/if}
+        </div>
     </div>
     <div class="keypad">
         {#each keys as key}
@@ -236,7 +245,7 @@
         {/each}
 
         <div id="start-game-div" class="overlay" bind:this={startGameOverlay}>
-            <button on:click={() => startGameOverlay.style.visibility = "hidden"}>Start</button>
+            <button on:click={startModalClick}>Start</button>
         </div>
 
         <div id="restart-game-div" class="overlay" bind:this={restartOverlay}>
@@ -244,7 +253,7 @@
         </div>
     </div>
 
-    {#if showStart && !gameOverState}<button on:click={finishSequence}>That's all I remember for now</button>{/if}
+    
 </main>
 
 <style lang="scss">
@@ -330,6 +339,22 @@
                     margin: 1rem 0;
                     text-align:left;
                 }
+                
+                button {
+                    border: solid 1px white;
+                }
+            }
+        }
+
+        .row-3 {
+            position:relative;
+            height: 3rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+
+            button {
+                border: #646cff solid 1px;
+            
             }
         }
     
