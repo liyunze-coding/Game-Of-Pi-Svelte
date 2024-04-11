@@ -25,17 +25,17 @@
     $: highestScore = Math.max(highestScore, digitsRemembered);
 
     const soundMap = {
-        "1" : "/Game-of-Pi/sound/vibraphone-key-0.mp3",
-        "2" : "/Game-of-Pi/sound/vibraphone-key-1.mp3",
-        "3" : "/Game-of-Pi/sound/vibraphone-key-2.mp3",
-        "4" : "/Game-of-Pi/sound/vibraphone-key-3.mp3",
-        "5" : "/Game-of-Pi/sound/vibraphone-key-4.mp3",
-        "6" : "/Game-of-Pi/sound/vibraphone-key-5.mp3",
-        "7" : "/Game-of-Pi/sound/vibraphone-key-6.mp3",
-        "8" : "/Game-of-Pi/sound/vibraphone-key-7.mp3",
-        "9" : "/Game-of-Pi/sound/vibraphone-key-8.mp3",
-        "0" : "/Game-of-Pi/sound/vibraphone-key-9.mp3",
-        "." : "/Game-of-Pi/sound/vibraphone-key-10.mp3",
+        "1" : "/Game-Of-Pi/sound/vibraphone-key-0.mp3",
+        "2" : "/Game-Of-Pi/sound/vibraphone-key-1.mp3",
+        "3" : "/Game-Of-Pi/sound/vibraphone-key-2.mp3",
+        "4" : "/Game-Of-Pi/sound/vibraphone-key-3.mp3",
+        "5" : "/Game-Of-Pi/sound/vibraphone-key-4.mp3",
+        "6" : "/Game-Of-Pi/sound/vibraphone-key-5.mp3",
+        "7" : "/Game-Of-Pi/sound/vibraphone-key-6.mp3",
+        "8" : "/Game-Of-Pi/sound/vibraphone-key-7.mp3",
+        "9" : "/Game-Of-Pi/sound/vibraphone-key-8.mp3",
+        "0" : "/Game-Of-Pi/sound/vibraphone-key-9.mp3",
+        "." : "/Game-Of-Pi/sound/vibraphone-key-10.mp3",
     }
 
     const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '.'];
