@@ -16,7 +16,11 @@
 	<div on:click|stopPropagation>
 		<slot />
 		<!-- svelte-ignore a11y-autofocus -->
-		<button autofocus on:click={() => dialog.close()}>close modal</button>
+		<button class="close" on:click={() => dialog.close()}>
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff">
+				<path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+			</svg>
+		</button>
 	</div>
 </dialog>
 
@@ -55,9 +59,27 @@
 			opacity: 1;
 		}
 	}
-	button {
+	button.close {
 		display: block;
         margin-left: auto;
         margin-right: auto;
+
+		background:none;
+		border: none;
+		padding:0;
+		cursor: pointer;
+
+		position:absolute;
+		top:1em;
+		right:1em;
+	}
+
+	button.close:focus {
+		outline: none;
+	}
+
+	button.close svg {
+		width: 1.5em;
+		height: 1.5em;
 	}
 </style>

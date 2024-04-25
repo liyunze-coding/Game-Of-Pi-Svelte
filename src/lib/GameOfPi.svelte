@@ -1,7 +1,11 @@
 <script lang="ts">
     import { onMount } from "svelte";
+    import Modal from "./Modal.svelte";
     
-    const PI = "3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930381964428810975665933446128475648233786783165271201909145648566923460348610454326648213393607260249141273724587006606315588174881520920962829254091715364367892590360011330530548820466521384146951941511609433057270365759591953092186117381932611793105118548074462379962749567351885752724891227938183011949129833673362440656643086021394946395224737190702179860943702770539217176293176752384674818467669405132000568127145263560827785771342757789609173637178721468440901224953430146549585371050792279689258923542019956112129021960864034418159813629774771309960518707211349999998372978049951059731732816096318595024459455346908302642522308253344685035261931188171010003137838752886587533208381420617177669147303598253490428755468731159562863882353787593751957781857780532171226806613001927876611195909216420198938095257201065485863278865936153381827968230301952035301852968995773622599413891249721775283479131515574857242454150695950829533116861727855889075098381754637464939319255060400927701671139009848824012858361603563707660104710181942955596198946767837449448255379774726847104047534646208046684259069491293313677028989";
+    const PI = "3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989380952572010654858632788659361533818279682303019520353018529689957736225994138912497217752834791315";
+
+    let showHowToPlay = false;
+    let showCredits = false;
 
     // first digits until last 5 digits: fast
     // last 5 digits to last 3 digits: default
@@ -25,19 +29,21 @@
 
     $: highestScore = Math.max(highestScore, digitsRemembered);
 
+
     const soundMap = {
-        "1" : "/Game-Of-Pi/sound/vibraphone-key-0.mp3",
-        "2" : "/Game-Of-Pi/sound/vibraphone-key-1.mp3",
-        "3" : "/Game-Of-Pi/sound/vibraphone-key-2.mp3",
-        "4" : "/Game-Of-Pi/sound/vibraphone-key-3.mp3",
-        "5" : "/Game-Of-Pi/sound/vibraphone-key-4.mp3",
-        "6" : "/Game-Of-Pi/sound/vibraphone-key-5.mp3",
-        "7" : "/Game-Of-Pi/sound/vibraphone-key-6.mp3",
-        "8" : "/Game-Of-Pi/sound/vibraphone-key-7.mp3",
-        "9" : "/Game-Of-Pi/sound/vibraphone-key-8.mp3",
-        "0" : "/Game-Of-Pi/sound/vibraphone-key-9.mp3",
-        "." : "/Game-Of-Pi/sound/vibraphone-key-10.mp3",
+        "1" : new Audio("/game-of-pi/sound/vibraphone-key-0.mp3"),
+        "2" : new Audio("/game-of-pi/sound/vibraphone-key-1.mp3"),
+        "3" : new Audio("/game-of-pi/sound/vibraphone-key-2.mp3"),
+        "4" : new Audio("/game-of-pi/sound/vibraphone-key-3.mp3"),
+        "5" : new Audio("/game-of-pi/sound/vibraphone-key-4.mp3"),
+        "6" : new Audio("/game-of-pi/sound/vibraphone-key-5.mp3"),
+        "7" : new Audio("/game-of-pi/sound/vibraphone-key-6.mp3"),
+        "8" : new Audio("/game-of-pi/sound/vibraphone-key-7.mp3"),
+        "9" : new Audio("/game-of-pi/sound/vibraphone-key-8.mp3"),
+        "0" : new Audio("/game-of-pi/sound/vibraphone-key-9.mp3"),
+        "." : new Audio("/game-of-pi/sound/vibraphone-key-10.mp3"),
     }
+    
 
     const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '.'];
 
@@ -140,6 +146,7 @@
 
     async function lightUpSequence(n: number, sequence: string[]){
         for (let i = 0; i < n; i++) {
+            if (showSequence === false) return;
 
             // get duration
             let duration = durations.slow;
@@ -157,7 +164,7 @@
 
             // play the sound
             // @ts-ignore
-            const audio = new Audio(soundMap[sequence[i]]);
+            const audio = soundMap[sequence[i]];
             audio.volume = volume;
             audio.play();
 
@@ -184,6 +191,7 @@
 
     function resetGameStats() {
         gameOverState = false;
+        showSequence = false;
         userSequence = '';
         digitsRemembered = 0;
         n = 0;
@@ -202,6 +210,16 @@
 </script>
 
 <main>
+    <Modal bind:showModal={showHowToPlay}>
+        <h2>How to play</h2>
+        <p>Remember the digits of Pi. Press the keys on your keyboard to enter the digits. Press Enter to start the game.</p>
+    </Modal>
+
+    <Modal bind:showModal={showCredits}>
+        <h2>Credits</h2>
+        <p>Created by <a href="https://twitter.com/raulcodes" target="_blank" rel="noopener noreferrer">@raulcodes</a></p>
+    </Modal>
+
     <div id="heading">
         <div class="row-1">
             <h1>Game of Pi</h1>
@@ -222,8 +240,12 @@
             <button on:click={resetGameStats}>Restart</button>
         </div>
         <div class="row-3">
-            {#if showStart && !gameOverState && !showStartGameOverlay}<button on:click={finishSequence}>That's all I remember for now</button>{/if}
+            <button on:click={() => showHowToPlay = true}>How to play</button>
+            <button on:click={() => showCredits = true}>Credits</button>
         </div>
+    </div>
+    <div id="display-user-digits">
+        {userSequence}
     </div>
     <div class="keypad">
         {#each keys as key}
@@ -251,6 +273,10 @@
         <div id="restart-game-div" class="overlay" bind:this={restartOverlay}>
             <button on:click={resetGameStats}>Restart</button>
         </div>
+    </div>
+
+    <div class="row-4">
+        {#if showStart && !gameOverState && !showStartGameOverlay}<button on:click={finishSequence}>That's all I remember for now</button>{/if}
     </div>
 
     
@@ -342,11 +368,37 @@
                 
                 button {
                     border: solid 1px white;
+
+                    &:hover {
+                        background-color: white;
+                        color: black;
+                    }
+                }
+            }
+
+            .row-3 {
+                button {
+                    border: solid 1px white;
+                    font-size: 1.125rem;
+                    line-height: 1.75rem;
+                    padding-left: 1.25rem;
+                    padding-right: 1.25rem;
+                    padding-top: 0.5rem;
+                    padding-bottom: 0.5rem;
+
+                    transition-property: background-color, color;
+                    transition-duration: 0.2s;
+                    
+                    &:hover {
+                        background-color: white;
+                        color: black;
+                    }
+                
                 }
             }
         }
 
-        .row-3 {
+        .row-4 {
             position:relative;
             height: 3rem;
             margin-top: 1rem;
@@ -354,19 +406,48 @@
 
             button {
                 border: #646cff solid 1px;
-            
+                
+                &:hover {
+                    background-color: #646cff;
+                    color: white;
+                }
+            }
+        }
+
+        #display-user-digits {
+            display: flex;
+            justify-content: flex-end;
+            font-size: 2rem;
+            margin: 1rem 0;
+            padding: 1rem 1rem;
+            height: 3rem;
+            border: solid 1px rgb(255 255 255);
+            border-radius: 0.5rem;
+            text-align: right;
+            overflow: hidden;
+            width: 50%;
+        
+            @media screen and (max-width: $md){
+                width: 100%;
             }
         }
     
         .keypad {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-gap: 1rem;
-            // padding: 1rem;
+            gap: 0.5rem;
+            border-radius: 0.5rem;
+
+            @media screen and (max-width: $md){
+                gap: 0.5rem;
+            }
+
+            padding: 1rem 2rem;
             max-width: 400px;
             margin: 0 auto;
 
             font-size: 2.5rem;
+            border-radius: 0.375rem;
 
             position: relative;
 
@@ -423,11 +504,11 @@
                 justify-content: center;
                 align-items: center;
                 background-color: #101010;
-                // border-radius: 0.75rem;
+                border-radius: 0.75rem;
                 cursor: pointer;
                 transition: background-color 0.2s;
 
-                width: 6rem;
+                width: 5.5rem;
                 padding: 0;
 
                 @media screen and (max-width: $md){
