@@ -30,7 +30,7 @@
     $: highestScore = Math.max(highestScore, digitsRemembered);
 
 
-    const soundMap = {
+    let soundMap = {
         "1" : new Audio("/game-of-pi/sound/vibraphone-key-0.mp3"),
         "2" : new Audio("/game-of-pi/sound/vibraphone-key-1.mp3"),
         "3" : new Audio("/game-of-pi/sound/vibraphone-key-2.mp3"),
@@ -59,7 +59,7 @@
         if (showSequence || gameOverState) return;
 
         // @ts-ignore
-        const audio = new Audio(soundMap[key]);
+        const audio = soundMap[key].cloneNode();
         audio.volume = volume;
         audio.play();
         
@@ -164,7 +164,7 @@
 
             // play the sound
             // @ts-ignore
-            const audio = soundMap[sequence[i]];
+            const audio = soundMap[sequence[i]].cloneNode();
             audio.volume = volume;
             audio.play();
 
