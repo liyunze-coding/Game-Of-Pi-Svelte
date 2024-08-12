@@ -37,6 +37,11 @@ h1 {
 	padding: 2em;
 }
 
+ol,
+li {
+	text-align: left;
+}
+
 #app {
 	max-width: 1280px;
 	margin: 0 auto;

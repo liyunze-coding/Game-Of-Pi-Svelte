@@ -212,12 +212,19 @@
 <main>
     <Modal bind:showModal={showHowToPlay}>
         <h2>How to play</h2>
-        <p>Remember the digits of Pi. Press the keys on your keyboard to enter the digits. Press Enter to start the game.</p>
+        <ol>
+            <li>Click on keypad or enter keys on your keyboard</li>
+            <li>Enter as many digits of Pi as you know</li>
+            <li>Click on "That's all I remember for now"</li>
+            <li>Follow the sequence of the lit up squares</li>
+            <li>When the sequence stops, enter the sequence shown to you</li>
+            <li>Memorise Pi the fun way!</li>
+        </ol>
     </Modal>
 
     <Modal bind:showModal={showCredits}>
         <h2>Credits</h2>
-        <p>Created by <a href="https://twitter.com/raulcodes" target="_blank" rel="noopener noreferrer">@raulcodes</a></p>
+        <p>Created by <a href="https://rython.dev/socials" target="_blank">@RythonDev</a></p>
     </Modal>
 
     <div id="heading">
